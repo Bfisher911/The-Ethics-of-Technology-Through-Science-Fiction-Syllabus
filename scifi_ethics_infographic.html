@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ethics of Technology Through Science Fiction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #2d1b69 50%, #1a1a3e 75%, #0f0f23 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.1), rgba(30, 144, 255, 0.1));
+            border-radius: 20px;
+            margin-bottom: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .course-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .info-card:hover::before {
+            left: 100%;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .topic-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .topic-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: scale(1.05);
+        }
+
+        .topic-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .quote-section {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .quote-author {
+            text-align: center;
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+
+        .modules-timeline {
+            position: relative;
+            margin: 50px 0;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4, #45b7d1);
+            transform: translateX(-50%);
+        }
+
+        .module-item {
+            position: relative;
+            margin: 40px 0;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .module-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .module-item:nth-child(odd) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .module-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-left: 60%;
+            width: 35%;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .module-item:nth-child(even) .module-content {
+            margin-left: 5%;
+        }
+
+        .module-number {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .fun-fact {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid #ffd700;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 15px 15px 0;
+            backdrop-filter: blur(5px);
+        }
+
+        .fun-fact::before {
+            content: "💡 Fun Fact: ";
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .instructor-card {
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 50px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .floating-element {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+        }
+
+        .floating-element.binary {
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            animation: float 15s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(-50px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) translateX(50px);
+                opacity: 0;
+            }
+        }
+
+        .grade-scale {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .grade-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .grade-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .module-content {
+                margin-left: 5% !important;
+                width: 90%;
+            }
+            
+            .timeline-line {
+                left: 20px;
+            }
+            
+            .module-number {
+                left: 20px;
+            }
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>The Ethics of Technology Through Science Fiction</h1>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">CPST-3100 • Summer 2025 • Tulane University</p>
+                <p style="font-size: 1rem; opacity: 0.8;">Navigate the complex moral terrain of technology-driven futures</p>
+            </div>
+        </div>
+
+        <div class="course-info">
+            <div class="info-card">
+                <h3>📅 Schedule</h3>
+                <p><strong>When:</strong> Thursdays at 6:00 PM</p>
+                <p><strong>Where:</strong> Virtual (Zoom)</p>
+                <p><strong>Duration:</strong> Summer 2025</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>🎓 Credits & Goals</h3>
+                <p><strong>Credits:</strong> 3 hours</p>
+                <p><strong>Focus:</strong> Critical analysis of technology's impact on human values through speculative fiction</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>📊 Assessment</h3>
+                <p><strong>Debates:</strong> 25%</p>
+                <p><strong>Discussions:</strong> 25%</p>
+                <p><strong>Quizzes:</strong> 25%</p>
+                <p><strong>Research Paper:</strong> 25%</p>
+            </div>
+        </div>
+
+        <div class="quote-section">
+            <div class="quote" id="rotatingQuote">
+                "Any sufficiently advanced technology is indistinguishable from magic."
+            </div>
+            <div class="quote-author" id="quoteAuthor">— Arthur C. Clarke</div>
+        </div>
+
+        <h2 style="text-align: center; margin: 50px 0 30px 0; font-size: 2.5rem;">Explore Technology Ethics Through</h2>
+        
+        <div class="topics-grid">
+            <div class="topic-card" onclick="showTopicInfo('ai')">
+                <span class="topic-icon">🤖</span>
+                <h3>Artificial Intelligence</h3>
+                <p>Exploring consciousness, autonomy, and the nature of intelligence</p>
+            </div>
+            
+            <div class="topic-card" onclick="showTopicInfo('surveillance')">
+                <span class="topic-icon">👁️</span>
+                <h3>Surveillance Technology</h3>
+                <p>Privacy, freedom, and the panopticon society</p>
+            </div>
+            
+            <div class="topic-card" onclick="showTopicInfo('genetics')">
+                <span class="topic-icon">🧬</span>
+                <h3>Genetic Engineering</h3>
+                <p>Playing god with the building blocks of life</p>
+            </div>
+            
+            <div class="topic-card" onclick="showTopicInfo('vr')">
+                <span class="topic-icon">🥽</span>
+                <h3>Virtual Reality</h3>
+                <p>What is real? Questioning the nature of reality itself</p>
+            </div>
+            
+            <div class="topic-card" onclick="showTopicInfo('warfare')">
+                <span class="topic-icon">⚔️</span>
+                <h3>Warfare Technology</h3>
+                <p>Autonomous weapons and the future of conflict</p>
+            </div>
+            
+            <div class="topic-card" onclick="showTopicInfo('biotech')">
+                <span class="topic-icon">🔬</span>
+                <h3>Biotechnology</h3>
+                <p>Enhancement vs. treatment in human modification</p>
+            </div>
+        </div>
+
+        <div class="fun-fact">
+            Isaac Asimov's Three Laws of Robotics, first introduced in 1942, are still referenced today in modern AI ethics discussions and robotics development!
+        </div>
+
+        <h2 style="text-align: center; margin: 50px 0 30px 0; font-size: 2.5rem;">Course Milestone Journey</h2>
+        
+        <div class="modules-timeline">
+            <div class="timeline-line"></div>
+            
+            <div class="module-item">
+                <div class="module-number">3</div>
+                <div class="module-content">
+                    <h3>Choose Your Ethical Battleground</h3>
+                    <p>Select an ethical issue that fascinates you - AI consciousness, genetic privacy, or warfare automation. Justify why this topic matters in our technological future.</p>
+                </div>
+            </div>
+            
+            <div class="module-item">
+                <div class="module-number">6</div>
+                <div class="module-content">
+                    <h3>Apply Philosophical Frameworks</h3>
+                    <p>Wield 2-3 ethical theories like intellectual weapons. How do utilitarianism, deontology, or virtue ethics illuminate your chosen dilemma?</p>
+                </div>
+            </div>
+            
+            <div class="module-item">
+                <div class="module-number">8</div>
+                <div class="module-content">
+                    <h3>Decode Science Fiction Prophecies</h3>
+                    <p>Identify 2-3 sci-fi works that explore your issue. What warnings or visions do they offer about our technological trajectory?</p>
+                </div>
+            </div>
+            
+            <div class="module-item">
+                <div class="module-number">10</div>
+                <div class="module-content">
+                    <h3>Synthesize Your Discoveries</h3>
+                    <p>Integrate your findings across theory and fiction. How has your understanding evolved through this philosophical journey?</p>
+                </div>
+            </div>
+            
+            <div class="module-item">
+                <div class="module-number">12</div>
+                <div class="module-content">
+                    <h3>Present Your Vision</h3>
+                    <p>Deliver a compelling 5-10 minute presentation showcasing your insights into technology's ethical landscape.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fun-fact">
+            Philip K. Dick's paranoid visions of reality-questioning technology in works like "Do Androids Dream of Electric Sheep?" have inspired countless films, including Blade Runner, Total Recall, and Minority Report!
+        </div>
+
+        <div class="quote-section">
+            <div class="quote">
+                "The future is not some place we are going to, but one we are creating. The paths are not to be found, but made, and the activity of making them changes both the maker and the destination."
+            </div>
+            <div class="quote-author">— John Schaar (often quoted in sci-fi contexts)</div>
+        </div>
+
+        <h2 style="text-align: center; margin: 50px 0 30px 0; font-size: 2.5rem;">Grading Scale</h2>
+        <div class="grade-scale">
+            <div class="grade-item"><strong>A</strong><br>93-100%</div>
+            <div class="grade-item"><strong>A-</strong><br>90-92%</div>
+            <div class="grade-item"><strong>B+</strong><br>87-89%</div>
+            <div class="grade-item"><strong>B</strong><br>83-86%</div>
+            <div class="grade-item"><strong>B-</strong><br>80-82%</div>
+            <div class="grade-item"><strong>C+</strong><br>77-79%</div>
+            <div class="grade-item"><strong>C</strong><br>73-76%</div>
+            <div class="grade-item"><strong>C-</strong><br>70-72%</div>
+            <div class="grade-item"><strong>D+</strong><br>67-69%</div>
+            <div class="grade-item"><strong>D</strong><br>63-66%</div>
+            <div class="grade-item"><strong>D-</strong><br>60-62%</div>
+            <div class="grade-item"><strong>F</strong><br>Below 60%</div>
+        </div>
+
+        <div class="instructor-card">
+            <h2>Your Guide Through the Ethical Matrix</h2>
+            <h3>Dr. Blaine Fisher</h3>
+            <p>📧 Bfisher3@tulane.edu</p>
+            <p>📞 (504) 912-5778</p>
+            <p style="margin-top: 20px; font-style: italic;">"Technology is neither good nor evil, nor is it neutral. It is what we make of it."</p>
+        </div>
+
+        <div class="fun-fact">
+            Ursula K. Le Guin's "The Dispossessed" explores anarchist society and technology's role in social organization - proving sci-fi isn't just about space battles, but deep political and ethical philosophy!
+        </div>
+    </div>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Rotating quotes
+        const quotes = [
+            {
+                text: "Any sufficiently advanced technology is indistinguishable from magic.",
+                author: "Arthur C. Clarke"
+            },
+            {
+                text: "The future is not some place we are going to, but one we are creating.",
+                author: "John Schaar"
+            },
+            {
+                text: "Technology is a useful servant but a dangerous master.",
+                author: "Christian Lous Lange"
+            },
+            {
+                text: "We are stuck with technology when what we really want is just stuff that works.",
+                author: "Douglas Adams"
+            },
+            {
+                text: "The machine does not isolate man from the great problems of nature but plunges him more deeply into them.",
+                author: "Antoine de Saint-Exupéry"
+            },
+            {
+                text: "I do not fear computers. I fear lack of them.",
+                author: "Isaac Asimov"
+            }
+        ];
+
+        let currentQuoteIndex = 0;
+
+        function rotateQuote() {
+            const quoteElement = document.getElementById('rotatingQuote');
+            const authorElement = document.getElementById('quoteAuthor');
+            
+            quoteElement.style.opacity = '0';
+            authorElement.style.opacity = '0';
+            
+            setTimeout(() => {
+                currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+                quoteElement.textContent = `"${quotes[currentQuoteIndex].text}"`;
+                authorElement.textContent = `— ${quotes[currentQuoteIndex].author}`;
+                quoteElement.style.opacity = '1';
+                authorElement.style.opacity = '1';
+            }, 500);
+        }
+
+        // Scroll progress indicator
+        function updateScrollProgress() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        }
+
+        // Create floating binary code
+        function createFloatingBinary() {
+            const binary = document.createElement('div');
+            binary.className = 'floating-element binary';
+            binary.textContent = Math.random().toString(2).substr(2, 8);
+            binary.style.left = Math.random() * 100 + 'vw';
+            binary.style.fontSize = Math.random() * 20 + 15 + 'px';
+            document.body.appendChild(binary);
+
+            setTimeout(() => {
+                binary.remove();
+            }, 15000);
+        }
+
+        // Topic info modal (simplified for this example)
+        function showTopicInfo(topic) {
+            const topics = {
+                ai: "Artificial Intelligence ethics explores questions of consciousness, free will, and what it means to be 'intelligent.' From Asimov's robots to HAL 9000, sci-fi has long grappled with AI morality.",
+                surveillance: "Surveillance technology asks: How much privacy are we willing to sacrifice for security? Orwell's 1984 and modern smart cities show us possible futures.",
+                genetics: "Genetic engineering forces us to question what makes us human. Should we eliminate genetic diseases? Enhance intelligence? Create designer babies?",
+                vr: "Virtual Reality challenges our perception of reality itself. If we can't tell what's real, does it matter? The Matrix trilogy explores this philosophical rabbit hole.",
+                warfare: "Warfare technology raises questions about autonomous weapons, civilian casualties, and the morality of delegating life-and-death decisions to machines.",
+                biotech: "Biotechnology blurs the line between treatment and enhancement, asking whether we should transcend our biological limitations."
+            };
+            
+            alert(topics[topic] || "Exploring the ethical implications of emerging technology through the lens of science fiction.");
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            
+            // Start quote rotation
+            setInterval(rotateQuote, 5000);
+            
+            // Update scroll progress
+            window.addEventListener('scroll', updateScrollProgress);
+            
+            // Create floating binary periodically
+            setInterval(createFloatingBinary, 3000);
+            
+            // Add transition effects to quote changes
+            document.getElementById('rotatingQuote').style.transition = 'opacity 0.5s ease';
+            document.getElementById('quoteAuthor').style.transition = 'opacity 0.5s ease';
+        });
+    </script>
+</body>
+</html>
